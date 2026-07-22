@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //<<<<<<< HEAD
 import java.util.Scanner;
 public class Greeter {
@@ -13,6 +14,11 @@ public class Greeter {
 //	    System.out.println("Name received: " + userName);
 //=======
 //class Greeter {
+=======
+import java.util.Scanner;
+
+public class Greeter {
+>>>>>>> 93cf753 (added import)
 
 	public static void greeter() {
             Scanner scanner = new Scanner(System.in);
