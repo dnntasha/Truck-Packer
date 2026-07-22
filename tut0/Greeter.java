@@ -5,7 +5,7 @@ public class Greeter {
   //          String name = scanner.nextLine();
     //        System.out.println("Hello, " + name + "! Welcome.");
       //      scanner.close();
-//	}
+
 	public static void main(String[] args)
         {
 //	    greeter();
