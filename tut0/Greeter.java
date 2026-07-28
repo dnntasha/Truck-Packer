@@ -15,15 +15,9 @@ public class Greeter {
 	    String name = scanner.nextLine();
             return name;
 	}
-//	public static void main(String[] args)
-//	{
-//	    String userName = getName();
-//	    System.out.println("Name received: " + userName);
-//=======
-//class Greeter {
 	
 //	    String userName = getName();
-//	    System.out.println("Name received: " + userName);
+//      System.out.println("Name received: " + userName);
 //	public static void greeter() {
 //	    Scanner scanner = new Scanner(System.in);
 //	    System.out.print("Enter your name: ");
@@ -39,6 +33,9 @@ public class Greeter {
 	/**
 	 *Prints a greeting message using the input name
 	 */
+	public static void goodbye() {
+	    System.out.println("Toodles, have a great day!");
+	}
 	public static void greeter(String name) {
 	    System.out.println("Wuddup, " + name + " I am supposed to give you a longer greeting message this time round... so here it is");
 	}
@@ -50,6 +47,7 @@ public class Greeter {
 	{
 	    String uname = getName();
 	    greeter(uname);
+	    goodbye();
 	}
 
 }
