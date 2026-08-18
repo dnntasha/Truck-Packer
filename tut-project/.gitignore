@@ -2,4 +2,5 @@ target/
 *.class
 *.jar
 dependency-reduced-pom.xml
+.vscode
 output.txt
