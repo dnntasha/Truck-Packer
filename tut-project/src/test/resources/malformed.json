@@ -1,0 +1,7 @@
+{
+  "truckVolume": 50,
+  "maxItems": 3,
+  "goods": [
+    {"name": "TV", "volume": 20, "value": 500, "quantity": 2}
+  ]
+  // missing closing brace and this comment is not valid JSON either
