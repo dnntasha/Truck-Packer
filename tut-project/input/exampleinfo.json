@@ -1,0 +1,11 @@
+{
+    "truckVolume": 150,
+    "maxItems": 10,
+    "goods": [
+        {"name": "TV", "volume": 30, "value": 500, "quantity": 3},
+        {"name": "Radio", "volume": 10, "value": 100, "quantity": 5},
+        {"name": "Fridge", "volume": 60, "value": 900, "quantity": 1},
+        {"name": "Airfryer", "volume": 25, "value": 300, "quantity": 2}
+    ]
+
+}
