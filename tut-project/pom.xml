@@ -45,15 +45,14 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>za.ac.sun.cs.rw344.truckpacker.Main</mainClass>
-            </manifest>
+              <mainClass>rw344.truckpacker.Main</mainClass>            </manifest>
           </archive>
        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.4.1</version>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.3</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -63,7 +62,7 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>za.ac.sun.cs.rw344.truckpacker.Main</mainClass>
+                  <mainClass>rw344.truckpacker.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>
