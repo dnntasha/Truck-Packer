@@ -1,0 +1,19 @@
+#Uses the official Maven image matching the pom.xml Java version (21) for consistent local and CI builds. Operates on shared Docker runners using the mandatory shared-docker-runner tag.
+
+image: maven:3.9-eclipse-temurin-21
+
+stages:
+  - test
+
+test:
+  stage: test
+  tags:
+    - shared-docker-runner
+  script:
+    - mvn -B test
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - .m2/repositoryii
+  variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
