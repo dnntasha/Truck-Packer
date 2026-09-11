@@ -13,6 +13,7 @@ public class InputLoader {
         if (!file.exists()) {
             throw new IOException("Input file not found: " + path);
         }
+        ObjectMapper mapper = path.endsWith(".xml") ? new XmlMapper() : new ObjectMapper();
         return mapper.readValue(file, TruckConfig.class);
     }
 }
