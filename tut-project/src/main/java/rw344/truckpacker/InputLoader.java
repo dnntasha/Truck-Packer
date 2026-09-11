@@ -26,7 +26,7 @@ public class InputLoader {
         if (lower.endsWith(".json")) {
             return jsonMapper;
         } else if (lower.endsWith(".yaml") || lower.endsWith(".yml")) {
-            return ymalMapper;
+            return yamlMapper;
         } else {
             throw new IOException("Unsupported input file extension for '" + path + "'. Supported formats are: .json .yaml/.yml");
         }
