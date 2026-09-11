@@ -10,7 +10,7 @@ public class InputLoader {
     //adding two mappers with JSON and YAML
     // YAML uses the same @JsonProperties that JSOM already relies on
     private final ObjectMapper jsonMapper = new ObjectMapper();
-    private final ObjectMapper ymalMapper = new YAMLMapper();
+    private final ObjectMapper yamlMapper = new YAMLMapper();
 
     public TruckConfig load(String path) throws IOException {
         File file = new File(path);
