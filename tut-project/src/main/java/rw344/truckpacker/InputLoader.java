@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Loads a truckconfig from an input file, this supports the JSON and YAML formata
+ * Loads a {@link TruckConfig} from an input file, this supports the JSON and YAML formats
  * it's chosen based on the extention (.extention)
  * YAML uses the same @JsonProperties that JSON already relies on
  */
@@ -19,7 +19,8 @@ public class InputLoader {
     /**
      * @param path to the input file must end in .json, .yaml or .yml.
      * @return the parsed truck configuration
-     * @throws IOException if the file is nonexistent, the extention is unsupported or as they say, "unparsable".
+     * @throws IOException if the file is nonexistent, the extention is 
+     * unsupported or as they say, "unparsable".
      */
     public TruckConfig load(String path) throws IOException {
         File file = new File(path);
@@ -31,7 +32,8 @@ public class InputLoader {
     }
 
     /**
-     * Picks the relevent Jackson mapper 
+     * Picks the relevent Jackson mapper
+     * @param path whose extention determines the format 
      * @return the mapper for parsing
      * @throws IOException if the extention is unsupported
      */
