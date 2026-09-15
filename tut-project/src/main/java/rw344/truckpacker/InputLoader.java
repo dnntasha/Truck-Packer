@@ -17,7 +17,7 @@ public class InputLoader {
     private final ObjectMapper yamlMapper = new YAMLMapper();
 
     /**
-     * The path to the input file must end in .json, .yaml or .yml.
+     * @param path to the input file must end in .json, .yaml or .yml.
      * @return the parsed truck configuration
      * @throws IOException if the file is nonexistent, the extention is unsupported or as they say, "unparsable".
      */
