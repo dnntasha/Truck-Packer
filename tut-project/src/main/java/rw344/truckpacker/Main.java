@@ -28,8 +28,7 @@ public class Main {
          * error checker
          */
         if (result.isEmpty()) {
-            System.err.println("Error: no valid packing could be found for the given goods, " +
-                    "truck volume (" + config.getTruckVolume() + ") and item cap (" + config.getMaxItems() + ").");
+            System.err.println("Error: no valid packing could be found for the given goods, " + "and the available fleet of " + config.getTrucks().size() + "truck(s).");
             return;
         }
 
