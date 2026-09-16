@@ -6,28 +6,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class TruckConfig {
-    private final int truckVolume; 
-    private final int maxItems;
+    private final List<Truck> trucks; 
     private final List<Item> goods;
-	//reads from the input file
+	/**reads from the input file
+     * the capacity, maximum no. allowed on board and available goods
+     * @param trucks the fleet of the trucks available for the delivery
+     * @param goods that need to be packed and transported
+     */
     @JsonCreator
-//the capacity, maximum no. allowed on board and available goods
-    public TruckConfig(@JsonProperty("truckVolume") int truckVolume, 
-                        @JsonProperty("maxItems") int maxItems,
+    public TruckConfig(@JsonProperty("trucks") List<Truck> trucks, 
                         @JsonProperty("goods") List<Item> goods) {
-        this.truckVolume = truckVolume;
-        this.maxItems = maxItems;
+        this.trucks = trucks;
         this.goods = goods;
     }
-//returns the values/list
-    public int getTruckVolume() {
-        return truckVolume;
+    /**
+     * @return the trucks available to deliver
+     */
+    public List<Truck> getTrucks() {
+        return trucks;
     }
 
-    public int getMaxItems() {
-        return maxItems;
-    }
-
+    /**
+     * @return the goods that need to be packed and transported
+     */
     public List<Item> getGoods() {
         return goods;
     }
