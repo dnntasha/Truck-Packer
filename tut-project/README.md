@@ -17,13 +17,15 @@ Produces a runnable, dependent jar at "target/truck-packer-1.0.jar"
 java -jar target/truck-packer-1.0.jar <input.json> [output.txt]
 ```
 
-- `input.json` — required, path to the input file (see format below).
+- `input-file` — required, path to the input file in **JSON or YAML** (see format below). The format is chosen automatically from the file extentions (`.json`, `.yaml`, `.yml`).
 - `output.txt` — optional, defaults to `output.txt` in the current directory.
 
 Example, using the sample file included in this repo:
+```bash
 java -jar target/truck-packer-1.0.jar input/exampleinfo.json output.txt
-
-If the combination of goods fit within the volume and item-count limits, the program prints an erro to the terminal and doesn't write an output file.
+java -jar target/truck-packer-1.0.jar input/exampleinfo.json output.txt
+```
+If the combination of goods fit within the volume and item-count limits, the program prints an error to the terminal and does not write an output file. An input file with an unrecognized extension is also rejected with a clear error
 
 
 ## Test
@@ -35,10 +37,13 @@ Runs the JUnit 5 test suite (`src/test/java`), which cover:
    actually optimal, not just non-empty).
 2. Well-formed input where no valid packing can be found.
 3. Ill-formed (malformed) input that will call an error.
+4. Well-formed YAML input parses and packs identically to equivalent JSON,
+   and malformed YAML / unsupported file extensions fail cleanly
+   (`InputLoaderTest`).
 
 ## Input format
 
-JSON file with the following structure:
+Accepts **JSON or YAML** file chosen based on a file extension with the following structure:
 
 ```json
 {
@@ -49,6 +54,21 @@ JSON file with the following structure:
     {"name": "Radio", "volume": 10, "value": 100, "quantity": 5}
   ]
 }
+```
+
+Equivalent YAML:
+```yaml
+truckVolume: 150
+maxItems: 10
+goods:
+  - name: TV
+    volume: 30
+    value: 500
+    quantity: 3
+  - name: Radio
+    volume: 10
+    value: 100
+    quantity: 5
 ```
 
 | Field | Type | Meaning |
@@ -81,7 +101,8 @@ Total value: 1400
 ```
 tut-project/
   pom.xml
-  input/exampleinfo.json       sample input file
+  input/exampleinfo.json       sample input file (JSON)
+  input/exampleinfo.yaml       sample input file (YAML)
   src/main/java/rw344/truckpacker/    application source
   src/test/java/rw344/truckpacker/    test suite
   src/test/resources/                  fixture input files used by the tests

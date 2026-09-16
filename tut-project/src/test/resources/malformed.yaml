@@ -1,0 +1,6 @@
+truckVolume: 50
+maxItems: 3
+goods:
+  - name: TV
+  volume: 20
+    value: 500
