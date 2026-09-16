@@ -16,6 +16,7 @@ public class Truck {
      * @param maxItems maximum number of items the truck can carry
      * @param cost cost of using the truck for delivery
      */
+    @JsonCreator
     public Truck(@JsonProperty("id") String id, @JsonProperty("volume") int volume, @JsonProperty("maxItems") int maxItems, @JsonProperty("cost") int cost) {
         this.id = id;
         this.volume = volume;
@@ -33,21 +34,21 @@ public class Truck {
     /**
      * @return the capaacity of the truck
      */
-    public String getVolume() {
+    public int getVolume() {
         return volume;
     }
 
     /**
      * @return the maximum no. of items this truck can carry
      */
-    public String getMaxItems() {
+    public int getMaxItems() {
         return maxItems;
     }
 
     /**
      * @return the cost if this truck is used
      */
-    public String getCost() {
+    public int getCost() {
         return cost;
     }
 
