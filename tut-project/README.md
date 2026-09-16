@@ -1,6 +1,6 @@
 # Truck Packer
 
-Select the most valuable combination of goods that fits into a delivery truck, subject tp a volume limit and a cap om the number of total items for the sake of safetly concerns.
+Select the most valuable combination of goods that fits into a delivery truck, subject tp a volume limit and a cap om the number of total items for the sake of safetly concerns. Added more trucks each consisting of (id, volume, maxitems and cost). Logic similar to that of Items.java, and the 1 truck must be replaced by a list of trucks where applicable.
 
 # Versions
 - **Java 21** 
