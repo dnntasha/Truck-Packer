@@ -17,7 +17,9 @@ class Item {
                     this.value = value;
                     this.quantity = quantity;
     }
-    //return various findings
+    /**
+     * return various findings
+     */
     public String getName() {
         return name;
     }

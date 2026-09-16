@@ -24,7 +24,9 @@ public class Main {
         }
 
         Packer.PackResult result = new Packer().pack(config);
-        //error checker
+        /**
+         * error checker
+         */
         if (result.isEmpty()) {
             System.err.println("Error: no valid packing could be found for the given goods, " +
                     "truck volume (" + config.getTruckVolume() + ") and item cap (" + config.getMaxItems() + ").");

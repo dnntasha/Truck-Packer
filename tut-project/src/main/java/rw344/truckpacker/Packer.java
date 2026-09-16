@@ -31,7 +31,9 @@ public class Packer {
             Item u = units.get(i - 1);
             for (int k = 0; k <= maxItems; k++) {
                 for (int v = 0; v <= truckVolume; v++) {
-                    // Default is not to take unit i.
+                    /**
+                     * Default is not to take unit i.
+                     */
                     dp[i][k][v] = dp[i - 1][k][v];
 
                     // Option: take unit i, if there's item-count and volume budget left.
@@ -46,7 +48,9 @@ public class Packer {
             }
         }
 
-        // The optimum need not use the full item or volume budget, so scan for it.
+        /**
+         * The optimum need not use the full item or volume budget, so scan for it.
+         */
         int bestK = 0, bestV = 0, bestValue = 0;
         for (int k = 0; k <= maxItems; k++) {
             for (int v = 0; v <= truckVolume; v++) {
@@ -70,10 +74,12 @@ public class Packer {
         }
         return units;
     }
-    //
+    
     private static PackResult reconstruct(List<Item> units, boolean[][][] take,
                                            int startI, int startK, int startV, int bestValue) {
-        // name -> {count, unitVolume, unitValue} and aided by claude.ai for the logic of a 3d 'table'
+        /**
+         * name -> {count, unitVolume, unitValue} and aided by claude.ai for the logic of a 3d 'table'
+         */
         Map<String, int[]> selection = new LinkedHashMap<>();
 
         int i = startI, k = startK, v = startV;

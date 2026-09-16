@@ -13,7 +13,9 @@ public class OutputWriter {
                         item.name(), item.quantity(), item.volume(), item.value());
             }
             writer.println();
-            //outputs the plain text to the output file
+            /**
+             * outputs the plain text to the output file
+             */
             writer.printf("Total items: %d%n", result.totalCount());
             writer.printf("Total volume used: %d%n", result.totalVolume());
             writer.printf("Total value: %d%n", result.totalValue());
