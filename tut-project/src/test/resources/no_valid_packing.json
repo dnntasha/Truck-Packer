@@ -1,8 +1,0 @@
-{
-  "truckVolume": 10,
-  "maxItems": 3,
-  "goods": [
-    {"name": "Fridge", "volume": 40, "value": 700, "quantity": 1},
-    {"name": "Sofa", "volume": 60, "value": 300, "quantity": 2}
-  ]
-}
