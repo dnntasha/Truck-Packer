@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * Holds the trucks that are avaiable and the goods to be delivered
+ */
 public class TruckConfig {
     private final List<Truck> trucks; 
     private final List<Item> goods;

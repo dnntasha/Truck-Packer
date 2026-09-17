@@ -2,6 +2,10 @@ package rw344.truckpacker;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Single truck availability, with each truck having an id, capacity limit 
+ * and delivery cost
+ */
 
 public class Truck {
     private final String id;

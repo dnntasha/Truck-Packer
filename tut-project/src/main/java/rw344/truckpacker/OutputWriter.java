@@ -3,8 +3,19 @@ package rw344.truckpacker;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * This writes a {@link Packer.PackResult} to a txt file 
+ * with the list of trucks and what each delivered and the totals for the delivery
+ */
+
 public class OutputWriter {
 
+    /**
+     * Writes the packing result to the file at {@code path}.
+     * @param path to write the output file
+     * @param result of th epakcing
+     * @throws IOException is the file cant be written
+     */
     public void write(String path, Packer.PackResult result) throws IOException {
         try (PrintWriter writer = new PrintWriter(path)) {
             writer.println("Packed items:");
@@ -17,9 +28,8 @@ public class OutputWriter {
                 writer.println();
 
             }
-            /**
-             * outputs the plain text to the output file
-             */
+            //outputs the plain text of the totals to the output file
+
             writer.printf("Total cost: %d%n", result.totalCost());
             writer.printf("Total items: %d%n", result.totalCount());
             writer.printf("Total volume used: %d%n", result.totalVolume());

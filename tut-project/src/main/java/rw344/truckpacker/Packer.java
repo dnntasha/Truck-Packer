@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class Packer {
 
+    /** One item type as packed onto a truck with its info */
     public record PackedItem(String name, int quantity, int volume, int value) {
     }
     
@@ -34,6 +35,9 @@ public class Packer {
      * a First-Fit-Decreasing bin-packing by sorting 
      * the cost(ascending) and item volume (descending)
      * while minimising cost
+     * 
+     * @param config the fleet of trucks and goods to pack
+     * @return the chosen packing or empty result of the packing
      */
     public PackResult pack(TruckConfig config) {
         List<Item> units = flatten(config.getGoods());
@@ -52,10 +56,9 @@ public class Packer {
             remainingItem.put(truck, truck.getMaxItems());
             loaded.put(truck, new ArrayList<>());
         }
-        /**
-         * Places each Item int the cheapest truck according to cost that still has room 
-         * largest stored first
-         */
+
+        //Places each Item int the cheapest truck according to cost that still has room 
+        //largest stored first
         for (Item unit : unitsByVolumeDesc) {
             Truck chosen = null;
             for (Truck truck : trucksByCost) {
@@ -75,6 +78,12 @@ public class Packer {
         return buildResult(trucksByCost, loaded);
     }
 
+    /**
+     * The goods are made into one entry per unit according to qualtity
+     * to allow them to be place individually on the truck
+     * @param goods with their qualtities to expand
+     * @return one {@link Item} per unit
+     */
     private static List<Item> flatten(List<Item> goods) {
         List<Item> units = new ArrayList<>();
         for (Item good : goods) {
@@ -85,6 +94,14 @@ public class Packer {
         return units;
     }
     
+    /**
+     * Builds the final {@link PackResult} from the assigned trucks to items.
+     * Each truck unit is packed by item name.
+     * @param truckByCost in the order they are considered
+     * @param loaded unit assignemnts
+     * @return the packed result.
+     */
+
     private PackResult buildResult(List<Truck> trucksByCost, Map<Truck, List<Item>> loaded) {
                 List<TruckLoad> truckLoads = new ArrayList<>();
         int totalCost = 0, totalValue = 0, totalVolume = 0, totalCount = 0;
@@ -122,6 +139,9 @@ public class Packer {
 
         return new PackResult(truckLoads, totalCost, totalValue, totalVolume, totalCount);
     }
+    /**
+     * @return no valid packing therefor no totals or trucks used
+     */
     private PackResult emptyResult() {
         return new PackResult(new ArrayList<>(),0,0,0,0);
     }
