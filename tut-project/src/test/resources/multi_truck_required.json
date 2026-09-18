@@ -1,0 +1,10 @@
+{
+    "trucks": [
+        {"id": "T1", "volume": 60, "maxItems": 2, "cost": 80},
+        {"id": "T2", "volume": 60, "maxItems": 2, "cost": 100}
+    ],
+    "goods": [
+        {"name": "Fridge", "volume": 60, "value": 900, "quantity": 1},
+        {"name": "Sofa", "volume": 50, "value": 400, "quantity": 1}
+    ]
+}

@@ -24,10 +24,9 @@ public class Main {
         }
 
         Packer.PackResult result = new Packer().pack(config);
-        //error checker
+        //error checker if no the truck combination couldn't do the job
         if (result.isEmpty()) {
-            System.err.println("Error: no valid packing could be found for the given goods, " +
-                    "truck volume (" + config.getTruckVolume() + ") and item cap (" + config.getMaxItems() + ").");
+            System.err.println("Error: no valid packing could be found for the given goods, " + "and the available fleet of " + config.getTrucks().size() + " truck(s).");
             return;
         }
 

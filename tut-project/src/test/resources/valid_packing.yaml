@@ -1,5 +1,8 @@
-truckVolume: 50
-maxItems: 3
+trucks:
+  - id: T1
+    volume: 150
+    maxItems: 10
+    cost: 50
 goods:
   - name: TV
     volume: 20

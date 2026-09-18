@@ -1,6 +1,8 @@
 {
-    "truckVolume": 150,
-    "maxItems": 10,
+    "trucks": [
+        {"id": "T1", "volume": 60, "maxItems":4, "cost":100},
+        {"id": "T2", "volume": 100, "maxItems":6, "cost":150}
+    ],
     "goods": [
         {"name": "TV", "volume": 30, "value": 500, "quantity": 3},
         {"name": "Radio", "volume": 10, "value": 100, "quantity": 5},

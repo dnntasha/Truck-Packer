@@ -1,0 +1,9 @@
+{
+    "trucks": [
+        {"id": "TV", "volume": 100, "maxItems": 10, "cost": 50}
+    ],
+    "goods": [
+        {"name": "TV", "volume": 20, "value": 500, "quantity": 2},
+        {"name": "Radio", "volume": 10, "value": 100, "quantity": 3}
+    ]
+}
