@@ -24,9 +24,10 @@ class InputLoaderTest {
         TruckConfig config = new InputLoader().load(resource("valid_packing.yaml").toString());
         Packer.PackResult result = new Packer().pack(config);
 
-        assertEquals(1100, result.totalValue());
-        assertEquals(50, result.totalVolume());
-        assertEquals(3, result.totalCount());
+        assertEquals(50, result.totalCost());
+        assertEquals(2200, result.totalValue());
+        assertEquals(130, result.totalVolume());
+        assertEquals(8, result.totalCount());
     }
 
     /**

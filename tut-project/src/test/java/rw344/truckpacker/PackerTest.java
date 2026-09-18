@@ -73,7 +73,7 @@ class PackerTest {
 
         assertFalse(result.isEmpty(), "Expected a valid packing to be found");
         assertEquals(1, result.truckLoads().size(), "Expected only the cheaper truck to be used");
-        assertEquals("Cheap", result.truckLoads().get(0).truckId());
+        assertEquals("Cheaper", result.truckLoads().get(0).truckId());
         assertEquals(30, result.totalCost(), "Expected only the cheaper truck's cost");
     }
 
