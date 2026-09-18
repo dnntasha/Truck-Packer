@@ -1,6 +1,6 @@
 trucks:
   - id: T1
-    volume: 100
+    volume: 150
     maxItems: 10
     cost: 50
 goods:
