@@ -1,6 +1,6 @@
 # Truck Packer
 
-Select the most valuable combination of goods that fits into a delivery truck, subject tp a volume limit and a cap om the number of total items for the sake of safetly concerns. Added more trucks each consisting of (id, volume, maxitems and cost). Logic similar to that of Items.java, and the 1 truck must be replaced by a list of trucks where applicable.
+Packs all goods across a fleet of delivery trucks that each have their own volume, item limit with a fixed delivery cost. This chooses which trucks to use to miniise the cost
 
 # Versions
 - **Java 21** 
@@ -23,21 +23,23 @@ java -jar target/truck-packer-1.0.jar <input.json> [output.txt]
 Example, using the sample file included in this repo:
 ```bash
 java -jar target/truck-packer-1.0.jar input/exampleinfo.json output.txt
-java -jar target/truck-packer-1.0.jar input/exampleinfo.json output.txt
+java -jar target/truck-packer-1.0.jar input/exampleinfo.yaml output.txt
 ```
-If the combination of goods fit within the volume and item-count limits, the program prints an error to the terminal and does not write an output file. An input file with an unrecognized extension is also rejected with a clear error
-
+If the combination of the available trucks can carry all items, the program will print an error to the terminal and doesn't create an output file. The program also rejects unrecognised file extentions.
 
 ## Test
 
 mvn test
 
 Runs the JUnit 5 test suite (`src/test/java`), which cover:
-1. Well formed input where a valid packing exists (and that the packing is
-   actually optimal, not just non-empty).
-2. Well-formed input where no valid packing can be found.
-3. Ill-formed (malformed) input that will call an error.
-4. Well-formed YAML input parses and packs identically to equivalent JSON,
+1. A single truck large enough to hold everything (only that truck is used).
+2. Goods that require multiple trucks, correctly split within each
+   truck's own volume and item limits.
+3. Cost minimisation: a cheaper truck is chosen over a pricier
+   alternative when either could carry everything alone.
+4. An item too large for any available truck (reported as no valid packing).
+5. Malformed JSON input (reported as a clean error).
+6. Well-formed YAML input parses and packs identically to equivalent JSON,
    and malformed YAML / unsupported file extensions fail cleanly
    (`InputLoaderTest`).
 
@@ -47,8 +49,10 @@ Accepts **JSON or YAML** file chosen based on a file extension with the followin
 
 ```json
 {
-  "truckVolume": 150,
-  "maxItems": 10,
+  "trucks": [
+    {"id": "T1", "volume": 150, "maxItems": 6, "cost": 100},
+    {"id": "T2", "volume": 150, "maxItems": 10, "cost": 150}
+  ],
   "goods": [
     {"name": "TV", "volume": 30, "value": 500, "quantity": 3},
     {"name": "Radio", "volume": 10, "value": 100, "quantity": 5}
@@ -58,8 +62,15 @@ Accepts **JSON or YAML** file chosen based on a file extension with the followin
 
 Equivalent YAML:
 ```yaml
-truckVolume: 150
-maxItems: 10
+trucks:
+  - id: T1
+    volume: 150
+    maxItems: 6
+    cost: 100
+  - id: T2
+    volume: 150
+    maxItems: 10
+    cost: 150
 goods:
   - name: TV
     volume: 30
@@ -72,9 +83,11 @@ goods:
 ```
 
 | Field | Type | Meaning |
-
-| `truckVolume` | integer | Total volume capacity of the truck |
-| `maxItems` | integer | Maximum total number of items allowed on the truck |
+| `trucks` | array | The fleet of trucks available for this delivery |
+| `trucks[].id` | string | Unique identifier for this truck |
+| `trucks[].volume` | integer | Volume capacity of this truck |
+| `trucks[].maxItems` | integer | Maximum number of items this truck can carry |
+| `trucks[].cost` | integer | Fixed cost incurred if this truck is used |
 | `goods` | array | List of good types available |
 | `goods[].name` | string | Name of the good |
 | `goods[].volume` | integer | Volume of a single unit of this good |
@@ -101,10 +114,30 @@ Total value: 1400
 ```
 tut-project/
   pom.xml
-  input/exampleinfo.json       sample input file (JSON)
-  input/exampleinfo.yaml       sample input file (YAML)
+  input/
+    exampleinfo.json       sample input file (JSON)
+    exampleinfo.yaml       sample input file (YAML)
   src/main/java/rw344/truckpacker/    application source
+    Item.java
+    Truck.java
+    TruckConfig.java
+    InputLoader.java
+    Packer.java
+    Main.java
+    OutputWriter.java
   src/test/java/rw344/truckpacker/    test suite
+    PackerTest.java
+    InputLoaderTest.java
   src/test/resources/                  fixture input files used by the tests
+    malformed.json
+    malformed.yaml
+    random.txt
+    valid_packing.yaml
+    cheapest_truck_preferred.json
+    single_truck_sufficient.json
+    multi_truck_required.json
+    items_too_large_no_packing.json
   .gitlab-ci.yml                CI pipeline definition
+  .gitignore
+  README.md
 ```
