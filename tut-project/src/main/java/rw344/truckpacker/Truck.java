@@ -1,9 +1,10 @@
 package rw344.truckpacker;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Single truck availability, with each truck having an id, capacity limit 
+ * Single truck availability, with each truck having an id, capacity limit
  * and delivery cost
  */
 
@@ -15,13 +16,15 @@ public class Truck {
 
     /**
      * Create the truck from the input-file fields
-     * @param id unique truck identofyer
-     * @param volume volume of the truck
+     * 
+     * @param id       unique truck identofyer
+     * @param volume   volume of the truck
      * @param maxItems maximum number of items the truck can carry
-     * @param cost cost of using the truck for delivery
+     * @param cost     cost of using the truck for delivery
      */
     @JsonCreator
-    public Truck(@JsonProperty("id") String id, @JsonProperty("volume") int volume, @JsonProperty("maxItems") int maxItems, @JsonProperty("cost") int cost) {
+    public Truck(@JsonProperty("id") String id, @JsonProperty("volume") int volume,
+            @JsonProperty("maxItems") int maxItems, @JsonProperty("cost") int cost) {
         this.id = id;
         this.volume = volume;
         this.maxItems = maxItems;

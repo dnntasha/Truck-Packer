@@ -20,7 +20,7 @@ class PackerTest {
 
     private Path resource(String name) throws URISyntaxException {
         return Paths.get(getClass().getClassLoader().getResource(name).toURI());
-    } 
+    }
 
     /**
      * when 1 reuck is able to hold and deliver all the goods
@@ -90,7 +90,7 @@ class PackerTest {
     }
 
     // 3. Ill-formed input: should fail cleanly (IOException), not crash with an
-    //    unhandled runtime exception.
+    // unhandled runtime exception.
     @Test
     void illFormedInput_reportedAsIOException() throws URISyntaxException {
         InputLoader loader = new InputLoader();
