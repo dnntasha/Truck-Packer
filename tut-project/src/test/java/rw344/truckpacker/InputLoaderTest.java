@@ -15,7 +15,7 @@ class InputLoaderTest {
         return Paths.get(getClass().getClassLoader().getResource(name).toURI());
     }
 
-    /** 
+    /**
      * Confirms YAML input is parsed correctly, not silently mishandled
      * Reuses the same known-optimal answer as the Json test on equivalent data.
      */
@@ -41,8 +41,8 @@ class InputLoaderTest {
         assertThrows(IOException.class, () -> loader.load(path));
     }
 
-    /** 
-     * Unsupported extensions must fail with a clear, explicit error rather 
+    /**
+     * Unsupported extensions must fail with a clear, explicit error rather
      * than being misinterpreted as JSON or crashing with a Jackson parse exception.
      */
     @Test
