@@ -116,7 +116,6 @@ tut-project/
   pom.xml
   input/
     exampleinfo.json       sample input file (JSON)
-    exampleinfo.yaml       sample input file (YAML)
   src/main/java/rw344/truckpacker/    application source
     Item.java
     Truck.java
