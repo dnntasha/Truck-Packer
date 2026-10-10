@@ -12,7 +12,6 @@ cache:
 
 stages:
   - test
-  - deploy
 
 test:
   stage: test
@@ -20,27 +19,5 @@ test:
     - shared-docker-runner
   script:
     - cd tut-project
-    - mvn -B clean test org.pitest:pitest-maven:mutationCoverage
-  artifacts:
-    paths:
-      - tut-project/target/site/jacoco/
-      - tut-project/target/pit-reports/
-    expire_in: 1 day
-
-pages:
-  stage: deploy
-  tags:
-    - shared-docker-runner
-  needs:
-    - test
-  script:
-    - mkdir -p public
-    - cp -r tut-project/target/site/jacoco public/jacoco
-    - cp -r tut-project/target/pit-reports public/pit
-    - cp tut-project/pages/index.html public/
-  artifacts:
-    paths:
-      - public
-    expire_in: 1 day
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - mvn -B test
+  
