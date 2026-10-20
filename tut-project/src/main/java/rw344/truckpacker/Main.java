@@ -28,7 +28,7 @@ public class Main {
         if (args.length < 1) {
             System.err.println("Usage: java -jar truck-packer-1.0.jar <input.json> [output.txt]");
             System.exit(1);
-            return;
+            return 1;
         }
 
         String inputPath = args[0];
