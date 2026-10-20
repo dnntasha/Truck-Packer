@@ -53,8 +53,10 @@ public class Main {
         try {
             new OutputWriter().write(outputPath, result);
             System.out.println("Packing written to " + outputPath);
+            return 0;
         } catch (IOException e) {
             System.err.println("Error: could not write output file '" + outputPath + "': " + e.getMessage());
+            return 1;
         }
     }
 }
