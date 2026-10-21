@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -97,5 +98,20 @@ class PackerTest {
         String path = resource("malformed.json").toString();
 
         assertThrows(IOException.class, () -> loader.load(path));
+    }
+
+    /**
+     * Each packed item line should report the volume and the value for its whole
+     * guantity
+     */
+    @Test
+    void packedItems_reportVolumeAndValueForWholeQuantity() throws IOException, URISyntaxException {
+        TruckConfig config = new InputLoader().load(resource("single_truck_sufficient.json").toString());
+        Packer.PackResult result = new Packer().pack(config);
+
+        List<Packer.PackedItem> expected = List.of(
+                new Packer.PackedItem("TV", 2, 40, 1000),
+                new Packer.PackedItem("Radio", 3, 30, 300));
+        assertEquals(expected, result.truckLoads().get(0).items());
     }
 }
