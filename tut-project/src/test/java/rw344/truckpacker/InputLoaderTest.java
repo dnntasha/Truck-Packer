@@ -1,13 +1,14 @@
 package rw344.truckpacker;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class InputLoaderTest {
 
@@ -51,5 +52,17 @@ class InputLoaderTest {
         String path = resource("random.txt").toString();
 
         assertThrows(IOException.class, () -> loader.load(path));
+    }
+
+    /**
+     * The shorter .yml extension must be accepted as YAML, just like .yaml.
+     */
+    @Test
+    void ymlExtension_parsedAsYaml() throws IOException, URISyntaxException {
+        TruckConfig config = new InputLoader().load(resource("valid_packing.yml").toString());
+
+        assertEquals(1, config.getTrucks().size());
+        assertEquals("T1", config.getTrucks().get(0).getId());
+        assertEquals(3, config.getGoods().size());
     }
 }

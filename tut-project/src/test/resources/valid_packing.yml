@@ -1,0 +1,18 @@
+trucks:
+  - id: T1
+    volume: 150
+    maxItems: 10
+    cost: 50
+goods:
+  - name: TV
+    volume: 20
+    value: 500
+    quantity: 2
+  - name: Radio
+    volume: 10
+    value: 100
+    quantity: 5
+  - name: Fridge
+    volume: 40
+    value: 700
+    quantity: 1
