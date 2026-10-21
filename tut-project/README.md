@@ -1,12 +1,30 @@
 # Truck Packer
 
-Packs all goods across a fleet of delivery trucks that each have their own volume, item limit with a fixed delivery cost. This chooses which trucks to use to miniise the cost
+Packs all goods across a fleet of delivery trucks that each have their own volume, item limit with a fixed delivery cost. The program choose which trucks to use so that all goods are transported while keeping the total delivery cost low.
+
+# Test reports (GitLab Pages)
+
+Convergence and mutation testing reports from the latest pipeline on main:
+
+- **JaCoCo** - statement and branch coverage
+- **PIT** - mutation testing score
+
+
+### Raw reports from the latest pipeline (CI artifacts)
+
+- [JaCoCo HTML](https://git.cs.sun.ac.za/Computer-Science/rw344/2026/27887707-RW344-Tutorials/-/jobs/artifacts/main/file/tut-project/target/site/jacoco/index.html?job=test)
+- [JaCoCo XML](https://git.cs.sun.ac.za/Computer-Science/rw344/2026/27887707-RW344-Tutorials/-/jobs/artifacts/main/file/tut-project/target/site/jacoco/jacoco.xml?job=test)
+- [PIT HTML](https://git.cs.sun.ac.za/Computer-Science/rw344/2026/27887707-RW344-Tutorials/-/jobs/artifacts/main/file/tut-project/target/pit-reports/index.html?job=test)
+- [PIT XML](https://git.cs.sun.ac.za/Computer-Science/rw344/2026/27887707-RW344-Tutorials/-/jobs/artifacts/main/file/tut-project/target/pit-reports/mutations.xml?job=test)
+
 
 # Versions
 - **Java 21** 
 - **Maven 3.9+**
 
 # build 
+Run inside `tut-project/`
+
 mvn package
 
 Produces a runnable, dependent jar at "target/truck-packer-1.0.jar"
@@ -25,23 +43,12 @@ Example, using the sample file included in this repo:
 java -jar target/truck-packer-1.0.jar input/exampleinfo.json output.txt
 java -jar target/truck-packer-1.0.jar input/exampleinfo.yaml output.txt
 ```
-If the combination of the available trucks can carry all items, the program will print an error to the terminal and doesn't create an output file. The program also rejects unrecognised file extentions.
+The Program exits with code `0` on success and `1` on any error. Errors are printed to the terminal and no output file is written when:
+- no input file is give,
+- the input file is missing, malformed, or has an unsupported extention.
+- The available trucks **cannot** carry all the goods,
+- The output file cannot be written
 
-## Test
-
-mvn test
-
-Runs the JUnit 5 test suite (`src/test/java`), which cover:
-1. A single truck large enough to hold everything (only that truck is used).
-2. Goods that require multiple trucks, correctly split within each
-   truck's own volume and item limits.
-3. Cost minimisation: a cheaper truck is chosen over a pricier
-   alternative when either could carry everything alone.
-4. An item too large for any available truck (reported as no valid packing).
-5. Malformed JSON input (reported as a clean error).
-6. Well-formed YAML input parses and packs identically to equivalent JSON,
-   and malformed YAML / unsupported file extensions fail cleanly
-   (`InputLoaderTest`).
 
 ## Input format
 
@@ -101,42 +108,75 @@ totals, e.g.:
 
 ```
 Packed items:
-- TV x2 (volume=60, value=1000)
-- Radio x4 (volume=40, value=400)
+Truck T1 (volume=120, Items=6):
+- TV x3 (volume = 90, values =1500)
+- Radio x3 (volume = 30, values =300)
 
-Total items: 6
-Total volume used: 100
-Total value: 1400
+Truck T2 (volume=20, Items=2):
+- Radio x2 (volume = 20, values =200)
+
+Total cost: 250
+Total items: 8
+Total volume used: 140
+Total value: 2000
 ```
 
-##Project layout
+## Packing approach 
+
+Trucks are considered from cheapest to most expensive, and goods from largest
+to smallest volume (first-fit decreasing). Each unit goes into the cheapest
+truck that still has enough volume and item space. If any unit fits in no
+truck, no valid packing exists and an error is reported.
+
+## Testing
+
+Run from inside `tut-project/`:
+
+```bash
+mvn test                                                      # tests + JaCoCo coverage report
+mvn clean test org.pitest:pitest-maven:mutationCoverage       # tests + coverage + PIT mutation report
+```
+
+Reports are written to:
+
+- `target/site/jacoco/index.html` (HTML), `jacoco.xml`, `jacoco.csv`
+- `target/pit-reports/index.html` (HTML), `mutations.xml`
+
+| Test class | What it covers |
+|---|---|
+| `PackerTest` | Single truck, multiple trucks, cheapest truck preferred, items too large, per-item volume/value |
+| `InputLoaderTest` | JSON and YAML (`.yaml`/`.yml`) parsing, malformed files, unsupported extensions |
+| `OutputWriterTest` | Exact output file format; unwritable output path |
+| `MainTest` | Argument handling, every error path, default and explicit output paths |
+
+## CI pipeline
+ `.gitlab-ci.yml` runs on every push:
+
+1. **test** – runs all tests, JaCoCo and PIT in one job; reports kept as artifacts.
+2. **pages** – on `main` only, publishes both HTML reports to GitLab Pages.
+
+All artifacts expire after **1 day**.
+
+## Project layout
 
 ```
+.gitlab-ci.yml                  CI pipeline (tests, coverage, mutation, Pages)
+.editorconfig                   shared formatting rules
+README.md
 tut-project/
-  pom.xml
-  input/
-    exampleinfo.json       sample input file (JSON)
-  src/main/java/rw344/truckpacker/    application source
-    Item.java
-    Truck.java
-    TruckConfig.java
-    InputLoader.java
-    Packer.java
-    Main.java
-    OutputWriter.java
-  src/test/java/rw344/truckpacker/    test suite
-    PackerTest.java
-    InputLoaderTest.java
-  src/test/resources/                  fixture input files used by the tests
-    malformed.json
-    malformed.yaml
-    random.txt
-    valid_packing.yaml
-    cheapest_truck_preferred.json
-    single_truck_sufficient.json
-    multi_truck_required.json
-    items_too_large_no_packing.json
-  .gitlab-ci.yml                CI pipeline definition
-  .gitignore
-  README.md
+  pom.xml                       build, JaCoCo and PIT configuration
+  input/exampleinfo.json        sample input
+  pages/index.html              landing page for the published reports
+  src/main/java/rw344/truckpacker/
+    Main.java                   command-line entry point
+    InputLoader.java            reads JSON/YAML input
+    TruckConfig.java            trucks + goods from the input
+    Truck.java                  one truck
+    Item.java                   one good
+    Packer.java                 packing algorithm
+    OutputWriter.java           writes the result file
+  src/test/java/rw344/truckpacker/
+    PackerTest.java  InputLoaderTest.java  OutputWriterTest.java  MainTest.java
+  src/test/resources/           input files used by the tests
+tut0/
 ```
